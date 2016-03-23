@@ -5,6 +5,7 @@ This repsitory contains all the training exercises needed for pcf course.
   - IaaS
   - SaaS
   - PaaS
+  
 # 2. Pushing Application To PCF - understanding buildpacks.
 # 3. Binding Services to application.
 # 4. Cloud Native Apps.
