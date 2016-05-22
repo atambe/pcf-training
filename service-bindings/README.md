@@ -1,2 +1,2 @@
-# microservices_pcf
+# bind a service  with name memcachedcloud ....
 
