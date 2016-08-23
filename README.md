@@ -14,5 +14,6 @@ This repsitory contains all the training exercises needed for pcf course.
 # 5. Microservices.
 # 6. Creating microservices with Spring Boot(Eureka).
   - Spring Boot Microservices.
-		Spring boot microservice created with Eureka server, Eureka client and API gateway (Zuul).
+		Spring boot microservice created with Eureka server, Eureka client and API gateway (Zuul). 
+
 # 7. Logs in PCF.
