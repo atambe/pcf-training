@@ -1,0 +1,35 @@
+server:
+  port: 1112
+  
+info:
+  component: Spring boot zuul service
+
+spring:
+    application:
+        name: zuul-service
+
+eureka:
+  instance:
+    metadataMap:
+      instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${random.value}}}
+  client:
+    # Default values comes from org.springframework.cloud.netflix.eurek.EurekaClientConfigBean
+    registryFetchIntervalSeconds: 1
+    instanceInfoReplicationIntervalSeconds: 1
+    initialInstanceInfoReplicationIntervalSeconds: 1
+    serviceUrl:
+      defaultZone: http://localhost:1111/eureka/
+      
+zuul:
+  ignoredServices: "*"
+  routes:
+    boot-service1: /spring-boot/**
+    boot-service2: /spring-boot2/**
+
+ribbon:
+  readTimeout: 50000
+  connectTimeout: 50000      
+
+logging:
+  level:
+    root: WARN

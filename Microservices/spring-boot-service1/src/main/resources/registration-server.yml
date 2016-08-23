@@ -1,0 +1,32 @@
+server:
+  port: 0
+  
+info:
+  component: Spring boot service 1
+
+spring:
+  view:
+    prefix: /WEB-INF/jsp/
+    suffix: .jsp
+  application:
+    name: boot-service1
+    
+application:
+  message: Hello Madhav
+      
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 1    
+    metadataMap:
+      instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${random.value}}}
+  client:
+    # Default values comes from org.springframework.cloud.netflix.eurek.EurekaClientConfigBean
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 1    
+    serviceUrl:
+      defaultZone: http://localhost:1111/eureka/ 
+
+logging:
+  level:
+    root: WARN
