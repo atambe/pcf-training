@@ -1,0 +1,111 @@
+#%RAML 0.8
+baseUri: http://mocksvc.mulesoft.com/mocks/543d4d1e-ae53-42ad-852d-2399643d4702
+title: template-artifact
+version: 1.0.0
+
+traits:
+  - common-header: !include traits/internal-technical-traits.raml
+  - security: !include traits/e2e-trust-traits.raml
+schemas: 
+- template-schema: |
+    {
+     "$schema": "http://json-schema.org/draft-04/schema#",
+     "type": "object",
+     "properties": {
+    "response": {
+      "type": "string"
+    },
+    "number": {
+      "type": "string"
+    },
+    "page-index": {
+      "type": "string"
+    },
+    "array-type": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "date",
+          "description"
+        ]
+      }
+    }
+    },
+    "required": [
+    "response",
+    "number",
+    "page-index",
+    "array-type"
+    ]
+    }
+    
+/template-artifacts/{id}/templates:
+  displayName: Current account transactions
+  description: All the transacations will be returned as a list for particular account
+  
+  uriParameters:
+    id:
+      displayName: Path param
+      description: Denotes the path parameter
+      type: string
+      maxLength: 14
+      minLength: 1
+      pattern: ^([0-9])*$
+  get:
+    is: [ common-header, security ]
+    queryParameters:
+      date:
+        displayName: date type template
+        description: Denotes the date type with format YYYYMMDD
+        type: string
+        required: true
+        maxLength: 8
+        pattern: ^([0-9]{4}[-/]?((0[13-9]|1[012])[-/]?(0[1-9]|[12][0-9]|30)|(0[13578]|1[02])[-/]?31|02[-/]?(0[1-9]|1[0-9]|2[0-8]))|([0-9]{2}(([2468][048]|[02468][48])|[13579][26])|([13579][26]|[02468][048]|0[0-9]|1[0-6])00)[-/]?02[-/]?29)
+      number:
+        displayName: Number type template
+        description: Denotes the number type template for tamplate and required
+        type: number
+        required: true
+        maximum: 165
+        minimum: 1
+      page-index:
+        displayName: page index
+        description: Denotes the page index of type string and optional
+        type: string
+        maxLength: 47
+        required: false
+        pattern: ^([0-9])*$
+    responses:
+      200:
+        body:
+          application/json:
+            schema: template-schema
+            example: |
+              {
+                "response" : "0000",
+                "number" : "12345678901234",
+                "page-index" : "20160602100000000001234567812341234567890123456",
+                "array-type" : [
+                {
+                "date" : "20160601",
+                "description" : "ABCDEFGHIJKLMNOPQRS"
+                }
+                ]
+              }
+      400:
+        description: Inconsistent parameters
+      404:
+        description: Current Account not found
+      500:
+        description: Server error
+        
+  
